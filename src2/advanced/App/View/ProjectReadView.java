@@ -1,0 +1,24 @@
+package advanced.App.View;
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+import advanced.App.dto.Project;
+
+public class ProjectReadView {
+	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
+		if (valueMap.get("project") == null) {
+			System.out.print("프로젝트 번호: ");
+			Integer id = new Integer(scanner.nextLine());
+			valueMap.put("projectId", id);
+			
+		} else {
+			Project project = (Project)valueMap.get("project");
+			System.out.println("프로젝트명: " + project.title);
+			System.out.println("설명: " + project.description);
+			System.out.println("시작일: " + project.startDate);
+			System.out.println("종료일: " + project.endDate);
+			System.out.println("관리자: " + project.projectManager);
+		}
+	}
+}
