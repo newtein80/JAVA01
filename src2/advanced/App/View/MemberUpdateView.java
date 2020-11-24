@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import advanced.App.dto.Member;
 
-public class MemberUpdateView {
+public class MemberUpdateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
 		if (valueMap.get("member") == null) {
 			System.out.print("변경할 회원 이메일: ");
@@ -39,9 +39,5 @@ public class MemberUpdateView {
 			
 			valueMap.put("otherMember", other);
 		}
-	}
-
-	public void displayResult(String message) {
-		System.out.println(message);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import advanced.App.dto.Member;
 
-public class ProjectUpdateView {
+public class ProjectUpdateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String,Object> valueMap) {
 		Member member = new Member();
 		
@@ -28,9 +28,5 @@ public class ProjectUpdateView {
 		if ("y".equals(scanner.nextLine().toLowerCase())) {
 			valueMap.put("member", member);
 		} 
-	}
-	
-	public void displayResult(String message) {
-		System.out.println(message);
 	}
 }

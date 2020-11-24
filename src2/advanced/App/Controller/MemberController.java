@@ -12,9 +12,9 @@ public class MemberController implements IBaseController {
 	 * 사용자 입력도구 연결과 비지니스로직의 이름을 초기화
 	 * @param scanner 사용자 입력도구 (Request)
 	 */
-	public MemberController(Scanner scanner) {
+	public MemberController() {
 		mm = new MemberService("회원관리");
-		this.scanner = scanner;
+		this.scanner = new Scanner(System.in);
 	}
 
 	/**

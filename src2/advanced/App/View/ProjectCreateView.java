@@ -27,7 +27,7 @@ import java.util.Scanner;
 
 import advanced.App.dto.Project;
 
-public class ProjectCreateView {
+public class ProjectCreateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String,Object> valueMap) {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Project project = new Project();
@@ -60,9 +60,5 @@ public class ProjectCreateView {
 		if ("y".equals(scanner.nextLine().toLowerCase())) {
 			valueMap.put("project", project);
 		} 
-	}
-	
-	public void displayResult(String message) {
-		System.out.println(message);
 	}
 }

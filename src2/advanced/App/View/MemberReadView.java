@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import advanced.App.dto.Member;
 
-public class MemberReadView {
+public class MemberReadView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
 		if (valueMap.get("member") == null) { // 조회하고자 하는 member의 email을 넘겨받기 위한 view
 			System.out.print("회원 이메일: ");

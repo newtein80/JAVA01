@@ -12,9 +12,9 @@ public class ProjectController implements IBaseController {
 	 * 사용자 입력도구 연결과 신규(new) 비지니스로직을 생성
 	 * @param scanner 사용자 입력도구 (Request)
 	 */
-	public ProjectController(Scanner scanner) {
+	public ProjectController() {
 		pm = new ProjectService("프로젝트 관리");
-		this.scanner = scanner;
+		this.scanner = new Scanner(System.in);
 	}
 
 	/**

@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 import advanced.App.dto.Project;
 
-public class ProjectReadView {
+public class ProjectReadView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
 		if (valueMap.get("project") == null) {
 			System.out.print("프로젝트 번호: ");
-			Integer id = new Integer(scanner.nextLine());
+			// Integer id = new Integer(scanner.nextLine());
+			Integer id = Integer.valueOf(scanner.nextLine());
 			valueMap.put("projectId", id);
 			
 		} else {
