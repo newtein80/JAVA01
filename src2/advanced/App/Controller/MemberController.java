@@ -13,8 +13,11 @@ public class MemberController implements IBaseController {
 	 * @param scanner 사용자 입력도구 (Request)
 	 */
 	public MemberController() {
-		mm = new MemberService("회원관리");
 		this.scanner = new Scanner(System.in);
+	}
+
+	public void setMemeberController(MemberService memberService) {
+		this.mm = memberService;
 	}
 
 	/**

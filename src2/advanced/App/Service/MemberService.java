@@ -20,21 +20,21 @@ public class MemberService extends AbsBaseService {
 	/**
 	 * Member DataBase Role
 	 */
-	MemberDao memberDao = new MemberDao();
+	MemberDao memberDao;
 	
 	// 각각의 Action에 맞는 UI 선언
-	MemberCreateView memberCreateView = new MemberCreateView();
-	MemberReadView memberReadView = new MemberReadView();
-	MemberUpdateView memberUpdateView = new MemberUpdateView();
-	MemberDeleteView memberDeleteView = new MemberDeleteView();
-	MemberListView memberListView = new MemberListView();
+	MemberCreateView memberCreateView;
+	MemberReadView memberReadView;
+	MemberUpdateView memberUpdateView;
+	MemberDeleteView memberDeleteView;
+	MemberListView memberListView;
 
 	/**
 	 * 초기 생성할 때 입력받은 request를 사용
 	 * @param request request명
 	 */
-	public MemberService(String request) {
-		super(request); // 부모클래스의 생성자를 사용
+	public MemberService() {
+		super("회원관리"); // 부모클래스의 생성자를 사용
 	}
 	
 	/*
@@ -134,5 +134,89 @@ public class MemberService extends AbsBaseService {
 		memberDao.updateMember(otherMember);
 		
 		memberUpdateView.displayResult("변경 성공입니다.");
+	}
+
+	/**
+	 * @return the memberDao
+	 */
+	public MemberDao getMemberDao() {
+		return memberDao;
+	}
+
+	/**
+	 * @param memberDao the memberDao to set
+	 */
+	public void setMemberDao(MemberDao memberDao) {
+		this.memberDao = memberDao;
+	}
+
+	/**
+	 * @return the memberCreateView
+	 */
+	public MemberCreateView getMemberCreateView() {
+		return memberCreateView;
+	}
+
+	/**
+	 * @param memberCreateView the memberCreateView to set
+	 */
+	public void setMemberCreateView(MemberCreateView memberCreateView) {
+		this.memberCreateView = memberCreateView;
+	}
+
+	/**
+	 * @return the memberReadView
+	 */
+	public MemberReadView getMemberReadView() {
+		return memberReadView;
+	}
+
+	/**
+	 * @param memberReadView the memberReadView to set
+	 */
+	public void setMemberReadView(MemberReadView memberReadView) {
+		this.memberReadView = memberReadView;
+	}
+
+	/**
+	 * @return the memberUpdateView
+	 */
+	public MemberUpdateView getMemberUpdateView() {
+		return memberUpdateView;
+	}
+
+	/**
+	 * @param memberUpdateView the memberUpdateView to set
+	 */
+	public void setMemberUpdateView(MemberUpdateView memberUpdateView) {
+		this.memberUpdateView = memberUpdateView;
+	}
+
+	/**
+	 * @return the memberDeleteView
+	 */
+	public MemberDeleteView getMemberDeleteView() {
+		return memberDeleteView;
+	}
+
+	/**
+	 * @param memberDeleteView the memberDeleteView to set
+	 */
+	public void setMemberDeleteView(MemberDeleteView memberDeleteView) {
+		this.memberDeleteView = memberDeleteView;
+	}
+
+	/**
+	 * @return the memberListView
+	 */
+	public MemberListView getMemberListView() {
+		return memberListView;
+	}
+
+	/**
+	 * @param memberListView the memberListView to set
+	 */
+	public void setMemberListView(MemberListView memberListView) {
+		this.memberListView = memberListView;
 	}
 }

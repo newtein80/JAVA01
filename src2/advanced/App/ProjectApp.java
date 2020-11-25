@@ -99,7 +99,7 @@ public class ProjectApp {
 	}
 
 	private void injectDependency() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Collection<Object> objList = applicationContext.values();
+		Collection<Object> objList = applicationContext.values(); // ProjectController, MemberController
 		Class<?> clazz = null;
 		Method[] methodList = null;
 		Object dependency = null;
@@ -112,6 +112,9 @@ public class ProjectApp {
 			methodList = clazz.getMethods();
 
 			for(Method method: methodList) {
+				// ! 미리 정의되어 있다.
+				// ! Rule 1. controller 에 "set"으로 시작하는 메소드를 작성
+				// ! Rule 2. controller의 "set"으로 시작하는 메소드의 parameter는 service 인터페이스를 구현한 클래스
 				if(method.getName().startsWith("set")) {
 					// 해당 메소드의 parameter 목록을 가져와서 그중 첫번째 파라미터가 applicationConext의 해당 클래스의 instance 인지 판별
 					dependency = searchDependency(method.getParameterTypes()[0]);

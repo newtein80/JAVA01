@@ -13,8 +13,11 @@ public class ProjectController implements IBaseController {
 	 * @param scanner 사용자 입력도구 (Request)
 	 */
 	public ProjectController() {
-		pm = new ProjectService("프로젝트 관리");
 		this.scanner = new Scanner(System.in);
+	}
+
+	public void setProjectController(ProjectService projectService) {
+		this.pm = projectService;
 	}
 
 	/**

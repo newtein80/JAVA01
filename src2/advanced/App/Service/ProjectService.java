@@ -18,21 +18,21 @@ import advanced.App.dto.Project;
 public class ProjectService extends AbsBaseService{
 
 	//Scanner scanner = null;
-	ProjectDao projectDao = new ProjectDao();
+	ProjectDao projectDao;
 	
 	// 각각의 Action에 맞는 UI 선언
-	ProjectCreateView projectFormView = new ProjectCreateView();	
-	ProjectReadView projectDetailView = new ProjectReadView();
-	ProjectUpdateView projectUpdateView = new ProjectUpdateView();
-	ProjectDeleteView projectDeleteView = new ProjectDeleteView();
-	ProjectListView	projectListView = new ProjectListView();
+	ProjectCreateView projectFormView;	
+	ProjectReadView projectDetailView;
+	ProjectUpdateView projectUpdateView;
+	ProjectDeleteView projectDeleteView;
+	ProjectListView	projectListView;
 	
 	/**
 	 * 초기 생성할 때 입력받은 prompt를 사용
 	 * @param prompt prompt명
 	 */
-	public ProjectService(String prompt) {
-		super(prompt);
+	public ProjectService() {
+		super("프로젝트 관리");
 	}
 	/*
 	public void service(Scanner scanner) {
@@ -132,5 +132,89 @@ public class ProjectService extends AbsBaseService{
 		projectDao.updateProject(otherProject);
 		
 		projectUpdateView.displayResult("변경 성공입니다.");
+	}
+
+	/**
+	 * @return the projectDao
+	 */
+	public ProjectDao getProjectDao() {
+		return projectDao;
+	}
+
+	/**
+	 * @param projectDao the projectDao to set
+	 */
+	public void setProjectDao(ProjectDao projectDao) {
+		this.projectDao = projectDao;
+	}
+
+	/**
+	 * @return the projectFormView
+	 */
+	public ProjectCreateView getProjectFormView() {
+		return projectFormView;
+	}
+
+	/**
+	 * @param projectFormView the projectFormView to set
+	 */
+	public void setProjectFormView(ProjectCreateView projectFormView) {
+		this.projectFormView = projectFormView;
+	}
+
+	/**
+	 * @return the projectDetailView
+	 */
+	public ProjectReadView getProjectDetailView() {
+		return projectDetailView;
+	}
+
+	/**
+	 * @param projectDetailView the projectDetailView to set
+	 */
+	public void setProjectDetailView(ProjectReadView projectDetailView) {
+		this.projectDetailView = projectDetailView;
+	}
+
+	/**
+	 * @return the projectUpdateView
+	 */
+	public ProjectUpdateView getProjectUpdateView() {
+		return projectUpdateView;
+	}
+
+	/**
+	 * @param projectUpdateView the projectUpdateView to set
+	 */
+	public void setProjectUpdateView(ProjectUpdateView projectUpdateView) {
+		this.projectUpdateView = projectUpdateView;
+	}
+
+	/**
+	 * @return the projectDeleteView
+	 */
+	public ProjectDeleteView getProjectDeleteView() {
+		return projectDeleteView;
+	}
+
+	/**
+	 * @param projectDeleteView the projectDeleteView to set
+	 */
+	public void setProjectDeleteView(ProjectDeleteView projectDeleteView) {
+		this.projectDeleteView = projectDeleteView;
+	}
+
+	/**
+	 * @return the projectListView
+	 */
+	public ProjectListView getProjectListView() {
+		return projectListView;
+	}
+
+	/**
+	 * @param projectListView the projectListView to set
+	 */
+	public void setProjectListView(ProjectListView projectListView) {
+		this.projectListView = projectListView;
 	}
 }

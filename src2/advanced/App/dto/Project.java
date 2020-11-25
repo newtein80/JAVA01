@@ -1,5 +1,7 @@
 package advanced.App.dto;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -8,11 +10,25 @@ import java.util.Date;
  * 정리하면 DTO는 Database에서 Data를 얻어 Service나 Controller 등으로 보낼 때 사용하는 객체를 말한다. 위 코드에서도 DAO가 Database로부터 Data를 얻은 뒤 List에 담아서 보내주고 있다.
  * ! getter, setter 는 현재 만들지 않음.
  */
-public class Project {
-	public int			id;
+public class Project implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public int id;
 	public String 		title;
 	public String 		description;
 	public Date 		startDate;
 	public Date 		endDate;
 	public String 		projectManager;
+
+	@Override
+	public String toString() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return id + "," + 
+				title + "," +
+				description + "," +
+				df.format(startDate) + "," +
+				df.format(endDate) + "," + 
+				projectManager;
+	}
 }
