@@ -1,6 +1,7 @@
 package advanced.App.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,32 +10,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import advanced.App.dto.Project;
-import advanced.App.infra.DBConnectionPool;
 
-/**
- * Data Access Object의 줄임말이다.
- * DB를 사용해 데이터를 조회하거나 조작하는 기능을 담당하는 것들을 DAO라고 부른다.
- * domain logic (비즈니스 로직이나 DB와 관련없는 코드들)을 persistence mechanism과 분리하기 위해 사용한다.
- * persistence layer: Database에 data를 CRUD(Create, Read, Update, Drop)하는 계층
- * ! Database 처리(in Memory)
- */
-public class ProjectDao implements IProjectDao {
-
-	DBConnectionPool dbConnectionPool;
+public class ProjectDaoInDatabaseVer2 implements IProjectDao {
+    Connection con = null;
 	
-	public void setDbConnectionPool(DBConnectionPool dbConnectionPool) {
-		this.dbConnectionPool = dbConnectionPool;
+	public ProjectDaoInDatabaseVer2() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-	public ProjectDao() {}
-	
-	@Override
+    
+    @Override
 	public void addProject(Project project) {
-		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
 			stmt = con.prepareStatement(
 				"insert into PROJECTS(TITLE,DECPT,START_DATE,END_DATE)" +
 				" values(?,?,?,?)");  // ? -> in parameter 
@@ -53,17 +47,14 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
 		}
 	}
 	
 	public void addProject0(Project project) {
-		Connection con = null;
 		Statement stmt = null;
 		
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			con = dbConnectionPool.getConnection();
 			stmt = con.createStatement(); 
 			
 			stmt.executeUpdate(
@@ -78,18 +69,15 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
 		}
 	}
-	
-	@Override
+    
+    @Override
 	public Project getProject(int id) {
-		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
 			stmt = con.createStatement();  
 			rs = stmt.executeQuery(
 					"select * from projects" +
@@ -114,19 +102,16 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
 		}
 		
 		return null;
 	}
-	
-	@Override
+    
+    @Override
 	public void updateProject(Project project) {
-		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
 			stmt = con.prepareStatement(
 				"update PROJECTS set" +
 				" TITLE=?," +
@@ -151,17 +136,14 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
 		}		
 	}
-	
-	@Override
+    
+    @Override
 	public void deleteProject(int id) {
-		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
 			stmt = con.prepareStatement(
 				"delete from projects" +
 				" where prj_no=?"); 
@@ -177,19 +159,16 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
 		}		
 	}
-	
-	@Override
+    
+    @Override
 	public Collection<Project> getProjectList() {
 		ArrayList<Project> list = new ArrayList<Project>();
-		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
 			stmt = con.createStatement();  
 			rs = stmt.executeQuery("select * from projects");
 			
@@ -211,12 +190,13 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
 		}
 		
 		return list;
 	}
 	
 	@Override
-	public void close() {}
+	public void close() {
+		try{con.close();} catch(Exception e) {}
+	}
 }

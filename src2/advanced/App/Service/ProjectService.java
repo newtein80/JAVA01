@@ -111,8 +111,8 @@ public class ProjectService extends AbsBaseService{
 	private void actionList() {
 		HashMap<String,Object> valueMap = 
 				new HashMap<String,Object>();
-		Project[] list = projectDao.getProjectList();
-		valueMap.put("list", list);
+		// Project[] list = projectDao.getProjectList();
+		valueMap.put("list", projectDao.getProjectList());
 		projectListView.execute(scanner, valueMap);
 	}
 

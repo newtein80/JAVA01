@@ -1,6 +1,7 @@
 package advanced.App.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,32 +10,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import advanced.App.dto.Project;
-import advanced.App.infra.DBConnectionPool;
 
-/**
- * Data Access Object의 줄임말이다.
- * DB를 사용해 데이터를 조회하거나 조작하는 기능을 담당하는 것들을 DAO라고 부른다.
- * domain logic (비즈니스 로직이나 DB와 관련없는 코드들)을 persistence mechanism과 분리하기 위해 사용한다.
- * persistence layer: Database에 data를 CRUD(Create, Read, Update, Drop)하는 계층
- * ! Database 처리(in Memory)
- */
-public class ProjectDao implements IProjectDao {
-
-	DBConnectionPool dbConnectionPool;
-	
-	public void setDbConnectionPool(DBConnectionPool dbConnectionPool) {
-		this.dbConnectionPool = dbConnectionPool;
+public class ProjectDaoInDatabaseVer1 implements IProjectDao {
+    public ProjectDaoInDatabaseVer1() {
 	}
-
-	public ProjectDao() {}
-	
+    
 	@Override
 	public void addProject(Project project) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
 			stmt = con.prepareStatement(
 				"insert into PROJECTS(TITLE,DECPT,START_DATE,END_DATE)" +
 				" values(?,?,?,?)");  // ? -> in parameter 
@@ -53,7 +42,7 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
+			try{con.close();} catch(Exception e) {}
 		}
 	}
 	
@@ -63,7 +52,21 @@ public class ProjectDao implements IProjectDao {
 		
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			con = dbConnectionPool.getConnection();
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			//Class.forName("com.mysql.jdbc.Driver").newInstance();
+			//DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			/*
+			DriverManager.registerDriver(
+					(java.sql.Driver) Class.forName(
+							"com.mysql.jdbc.Driver").newInstance());
+			*/
+			
+			// com.mysql.jdbc.Connection 인스턴스 리턴
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
+			
+			// com.mysql.jdbc.Statement 인스턴스 리턴
 			stmt = con.createStatement(); 
 			
 			stmt.executeUpdate(
@@ -78,18 +81,20 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
+			try{con.close();} catch(Exception e) {}
 		}
 	}
-	
-	@Override
+    
+    @Override
 	public Project getProject(int id) {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
 			stmt = con.createStatement();  
 			rs = stmt.executeQuery(
 					"select * from projects" +
@@ -114,19 +119,21 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
+			try{con.close();} catch(Exception e) {}
 		}
 		
 		return null;
 	}
-	
-	@Override
+    
+    @Override
 	public void updateProject(Project project) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
 			stmt = con.prepareStatement(
 				"update PROJECTS set" +
 				" TITLE=?," +
@@ -151,17 +158,19 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
+			try{con.close();} catch(Exception e) {}
 		}		
 	}
-	
-	@Override
+    
+    @Override
 	public void deleteProject(int id) {
 		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
 			stmt = con.prepareStatement(
 				"delete from projects" +
 				" where prj_no=?"); 
@@ -177,11 +186,11 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
+			try{con.close();} catch(Exception e) {}
 		}		
 	}
-	
-	@Override
+    
+    @Override
 	public Collection<Project> getProjectList() {
 		ArrayList<Project> list = new ArrayList<Project>();
 		Connection con = null;
@@ -189,9 +198,15 @@ public class ProjectDao implements IProjectDao {
 		ResultSet rs = null;
 		
 		try {
-			con = dbConnectionPool.getConnection();
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection( 
+					"jdbc:mysql://localhost/studydb", "study", "study");
 			stmt = con.createStatement();  
 			rs = stmt.executeQuery("select * from projects");
+			/* executeQuery()는 서버에서 질의결과 전체를 가져오지 않는다.
+			 * 단지 질의 결과를 가져오는 일을 하는 객첼를 리턴한다.
+			 * 그 객체가 ResultSet 구현체이다.
+			 */
 			
 			Project project = null;
 			while(rs.next()) { // 서버의 결과물에서 레코드 하나를 가져오라.
@@ -211,7 +226,7 @@ public class ProjectDao implements IProjectDao {
 			
 		} finally {
 			try{stmt.close();} catch(Exception e) {}
-			dbConnectionPool.returnConnection(con);
+			try{con.close();} catch(Exception e) {}
 		}
 		
 		return list;
