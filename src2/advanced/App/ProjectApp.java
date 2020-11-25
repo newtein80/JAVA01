@@ -13,6 +13,7 @@ import java.util.Scanner;
 import advanced.App.Controller.IBaseController;
 import advanced.App.Controller.MemberController;
 import advanced.App.Controller.ProjectController;
+import advanced.App.infra.DBConnectionPool;
 
 /**
  * Application Main Start Class
@@ -23,6 +24,7 @@ public class ProjectApp {
 	 * 사용자 명령에 맞는 Controller 호출 목록 ! RequestMapping, Controller
 	 */
 	HashMap<String, IBaseController> controllerMap = new HashMap<String, IBaseController>();
+	HashMap<String, Object> applicationContext = new HashMap<String, Object>();
 
 	/**
 	 * 사용자 입력 도구 ! View, Request
@@ -48,6 +50,8 @@ public class ProjectApp {
 		// 사용자 입력 도구 생성
 		// ! 화면 생성
 		scanner = new Scanner(System.in);
+
+		prepareDBConnectionPool();
 		
 		// 비지니스 로직 호출 명령 생성
 		// ! Controller 생성
@@ -74,6 +78,16 @@ public class ProjectApp {
 			// ! requestmapping 목록 생성
 			controllerMap.put(iBaseController.getName(), iBaseController);
 		}
+	}
+
+	private void prepareDBConnectionPool() {
+		String driver = "org.postgresql.Driver";
+		String url = "jdbc:postgresql://localhost:5433/postgres";
+		String user = "postgres";
+		String password = "#skdlf12";
+
+		DBConnectionPool dbcp = new DBConnectionPool(driver, url, user, password);
+		applicationContext.put("dbConnectionPool", dbcp);
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException,
