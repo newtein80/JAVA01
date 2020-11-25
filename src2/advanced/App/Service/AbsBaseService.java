@@ -26,15 +26,15 @@ abstract public class AbsBaseService {
 
 	/**
 	 * 사용자로부터 정보를 입력받음
-	 * @param request 정보를 입력받을 입력 도구
+	 * @param scanner 정보를 입력받을 입력 도구
 	 */
-	public void service(Scanner request) {
-		this.scanner = request;
+	public void service(Scanner scanner) {
+		this.scanner = scanner;
 		String m_request = null;
 		// 사용자로부터 계속 입력을 받음
 		while(true) {
 			System.out.print(requestString + ": ");
-			m_request = request.nextLine();
+			m_request = scanner.nextLine();
 			requestMappingService(m_request);
 			if ("menu".equals(m_request)) {
 				break;

@@ -56,6 +56,8 @@ public class ProjectApp {
 
 		prepareObject();
 		injectDependency();
+
+		destroy();
 	}
 
 	/**
@@ -186,7 +188,8 @@ public class ProjectApp {
 	 */
 	protected void processMappingController(String request) {
 		// 사용자 Action에 맞는 비지니스로직 호출 명령 객체 꺼내옴
-		IBaseController controller = controllerMap.get(request); 
+		// IBaseController controller = controllerMap.get(request); 
+		IBaseController controller = (IBaseController) applicationContext.get(request);
 		if (controller != null) {
 			try {
 				// 해당 호출 명령 객체의 서비스 시작

@@ -21,7 +21,7 @@ public class ProjectService extends AbsBaseService{
 	ProjectDao projectDao;
 	
 	// 각각의 Action에 맞는 UI 선언
-	ProjectCreateView projectFormView;	
+	ProjectCreateView projectCreateView;	
 	ProjectReadView projectDetailView;
 	ProjectUpdateView projectUpdateView;
 	ProjectDeleteView projectDeleteView;
@@ -69,17 +69,20 @@ public class ProjectService extends AbsBaseService{
 	}
 
 	private void actionCreate() {
-		HashMap<String,Object> valueMap = 
-				new HashMap<String,Object>();
+		HashMap<String,Object> valueMap = new HashMap<String,Object>();
 		
+		if (scanner == null || valueMap == null || projectCreateView == null) {
+			throw new NullPointerException();
+		}
+		// https://lovefor-you.tistory.com/113
 		// 사용자 명령에 맞는 View 실행
-		projectFormView.execute(scanner, valueMap);
+		projectCreateView.execute(scanner, valueMap);
 		// view에서 넘어온 member 정보를 Member변수에 할당
 		Project project = (Project)valueMap.get("project");
 		// view에서 넘어온 member 정보를 Database처리 할 수 있도록 알맞게 Member 객체로 넘겨줌
 		projectDao.addProject(project);
 		// 각 view에 맞는 메시지를 넘겨줌
-		projectFormView.displayResult("등록성공입니다");
+		projectCreateView.displayResult("등록성공입니다");
 	}
 
 	private void actionRead() {
@@ -152,14 +155,14 @@ public class ProjectService extends AbsBaseService{
 	 * @return the projectFormView
 	 */
 	public ProjectCreateView getProjectFormView() {
-		return projectFormView;
+		return projectCreateView;
 	}
 
 	/**
 	 * @param projectFormView the projectFormView to set
 	 */
 	public void setProjectFormView(ProjectCreateView projectFormView) {
-		this.projectFormView = projectFormView;
+		this.projectCreateView = projectFormView;
 	}
 
 	/**
