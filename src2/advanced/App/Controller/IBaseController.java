@@ -9,7 +9,7 @@ package advanced.App.Controller;
  * @author nile
  */
 public interface IBaseController {
-	
+
 	/**
 	 * 비지니스로직 서비스 실행
 	 * @throws Exception
@@ -21,4 +21,6 @@ public interface IBaseController {
 	 * @return Command명
 	 */
 	String getName();
+
+	void destroy();
 }

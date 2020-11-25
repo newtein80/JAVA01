@@ -33,4 +33,9 @@ public class ProjectController implements IBaseController {
 		return "p";
 	}
 
+	@Override
+	public void destroy() {
+
+	}
+
 }

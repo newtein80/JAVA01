@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Properties;
@@ -52,34 +53,14 @@ public class ProjectApp {
 		scanner = new Scanner(System.in);
 
 		prepareDBConnectionPool();
-		
-		// 비지니스 로직 호출 명령 생성
-		// ! Controller 생성
-		Properties props = new Properties();
-		props.load(new FileReader("controllermap.properties"));
-		Collection<Object> objs = props.values();
 
-		// Class clazz = null;
-		Class<?> clazz = null;
-		
-		IBaseController	iBaseController = null;
-
-		for(Object obj : objs) {
-			clazz = Class.forName(obj.toString());
-
-			// ! Deprecated: newInstance
-			// iBaseController = (IBaseController) clazz.newInstance();
-			// * https://jwdeveloper.tistory.com/44
-			// * https://yolojeb.tistory.com/20
-			// * http://www.tcpschool.com/java/java_polymorphism_interface
-			iBaseController = (IBaseController) clazz.getDeclaredConstructor().newInstance();
-
-			// 비지니스 로직 호출 명령 Collection에 올려놓음
-			// ! requestmapping 목록 생성
-			controllerMap.put(iBaseController.getName(), iBaseController);
-		}
+		prepareObject();
+		injectDependency();
 	}
 
+	/**
+	 * Prepare DataBase Connection Pool
+	 */
 	private void prepareDBConnectionPool() {
 		String driver = "org.postgresql.Driver";
 		String url = "jdbc:postgresql://localhost:5433/postgres";
@@ -88,6 +69,80 @@ public class ProjectApp {
 
 		DBConnectionPool dbcp = new DBConnectionPool(driver, url, user, password);
 		applicationContext.put("dbConnectionPool", dbcp);
+	}
+
+	/**
+	 * Prepare Required object
+	 * 필요한 객체를 properties 파일에서 읽어와 HashMap(applicationContext)에 담아둠
+	 */
+	private void prepareObject() throws FileNotFoundException, IOException, ClassNotFoundException,
+			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException {
+
+		Properties props = new Properties();
+		props.load(new FileReader("controllermap.properties"));
+		/*
+			p=advanced.App.Controller.ProjectController
+			m=advanced.App.Controller.MemberController
+		*/
+		Collection<Object> keyList = props.keySet();
+
+		Class<?> clazz = null;
+
+		for(Object keyName : keyList) {
+			clazz = Class.forName(props.getProperty(((String) keyName).trim()));
+
+			// applicationContext.put("p", ProjectController);
+			// applicationContext.put("m", MemberController);
+			applicationContext.put(((String) keyName).trim(), clazz.getDeclaredConstructor().newInstance());
+		}
+	}
+
+	private void injectDependency() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Collection<Object> objList = applicationContext.values();
+		Class<?> clazz = null;
+		Method[] methodList = null;
+		Object dependency = null;
+
+		// https://jdm.kr/blog/68
+		// https://12bme.tistory.com/129
+		for(Object obj: objList) {
+			clazz = obj.getClass();
+			// 해당 클래스의 메소드목록을 가져옴(public 메소드, 상속받은 public 메소드 가져옴)
+			methodList = clazz.getMethods();
+
+			for(Method method: methodList) {
+				if(method.getName().startsWith("set")) {
+					// 해당 메소드의 parameter 목록을 가져와서 그중 첫번째 파라미터가 applicationConext의 해당 클래스의 instance 인지 판별
+					dependency = searchDependency(method.getParameterTypes()[0]);
+					if(dependency != null) {
+						// 해당 메소드를 실행
+						// 첫번째 parameter: 메소드를 호출할 객체, 두번째 parameter: 메소드에 전달할 parameter
+						method.invoke(obj, dependency);
+					}
+				}
+			}
+		}
+	}
+
+	private Object searchDependency(Class<?> clazz) {
+		Collection<Object> objList = applicationContext.values();
+		for(Object obj: objList) {
+			if(clazz.isInstance(obj)) {
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	private void destroy() {
+		for(Object obj : applicationContext.values()) {
+			if (obj instanceof IBaseController)
+				((IBaseController)obj).destroy();
+			
+			if (obj instanceof DBConnectionPool)
+				((DBConnectionPool)obj).close();
+		}
 	}
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException,

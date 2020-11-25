@@ -32,4 +32,9 @@ public class MemberController implements IBaseController {
 	public String getName() {
 		return "m";
 	}
+
+	@Override
+	public void destroy() {
+		
+	}
 }
