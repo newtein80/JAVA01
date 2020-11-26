@@ -96,6 +96,7 @@ public class ProjectApp {
 
 			// applicationContext.put("p", ProjectController);
 			// applicationContext.put("m", MemberController);
+			// ! 중요: .properties 파일에 작성된 클래스 명을 생성자(constructor)를 통해 생성. 즉, 각 클래스는 생성자를 통해 이미 생성되어있음!!
 			applicationContext.put(((String) keyName).trim(), clazz.getDeclaredConstructor().newInstance());
 		}
 	}
@@ -115,8 +116,11 @@ public class ProjectApp {
 
 			for(Method method: methodList) {
 				// ! 미리 정의되어 있다.
-				// ! Rule 1. controller 에 "set"으로 시작하는 메소드를 작성
-				// ! Rule 2. controller의 "set"으로 시작하는 메소드의 parameter는 service 인터페이스를 구현한 클래스
+				// ! Rule 1. prepareObject 메소드를 통해 이미 생성된 각 클래스에 "set"으로 시작하는 메소드를 작성. service 클래스에 각 view에 대한 setter 메소드 존재함
+				// ! Rule 2. 각 클래스의 "set"으로 시작하는 메소드의 parameter는 prepareObject 메소드를 통해 생성된 클래스들 중하나
+				// ! * 미리 준비된 Object(현재는 view클래스도 포함)들을 생성자를 통해 생성하고 해당 클래스의 setter를 통해서 생성된 클래스를 할당(?)
+				// ! controller -> service -> view, dao 각 setter 메소드 존재함
+				// ! class를 생성하고 각 클래스의 set메소드를 통해 각 클래스에 필요한 object를 주입(?)해준다.
 				if(method.getName().startsWith("set")) {
 					// 해당 메소드의 parameter 목록을 가져와서 그중 첫번째 파라미터가 applicationConext의 해당 클래스의 instance 인지 판별
 					dependency = searchDependency(method.getParameterTypes()[0]);
