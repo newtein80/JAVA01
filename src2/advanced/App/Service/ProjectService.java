@@ -24,7 +24,7 @@ public class ProjectService extends AbsBaseService{
 	
 	// 각각의 Action에 맞는 UI 선언
 	ProjectCreateView projectCreateView;	
-	ProjectReadView projectDetailView;
+	ProjectReadView projectReadView;
 	ProjectUpdateView projectUpdateView;
 	ProjectDeleteView projectDeleteView;
 	ProjectListView	projectListView;
@@ -92,7 +92,7 @@ public class ProjectService extends AbsBaseService{
 				new HashMap<String,Object>();
 
 		// 사용자 명령에 맞는 View 실행
-		projectDetailView.execute(scanner, valueMap);
+		projectReadView.execute(scanner, valueMap);
 		// view에서 넘어온 email(사용자가 입력한 값)을 변수에 담음
 		Integer id = (Integer)valueMap.get("projectId");
 
@@ -101,7 +101,7 @@ public class ProjectService extends AbsBaseService{
 		// Dbatbase에서 가져온 member 정보를 view에 넘겨주기 위해 valueMap에 담음
 		valueMap.put("project", project);
 		// member 정보가 담긴 valueMap을 view에 넘겨줌
-		projectDetailView.execute(scanner, valueMap);
+		projectReadView.execute(scanner, valueMap);
 	}
 
 	private void actionDelete() {
@@ -154,31 +154,31 @@ public class ProjectService extends AbsBaseService{
 	}
 
 	/**
-	 * @return the projectFormView
+	 * @return the projectCreateView
 	 */
-	public ProjectCreateView getProjectFormView() {
+	public ProjectCreateView getProjectCreateView() {
 		return projectCreateView;
 	}
 
 	/**
-	 * @param projectFormView the projectFormView to set
+	 * @param projectCreateView the projectCreateView to set
 	 */
-	public void setProjectFormView(ProjectCreateView projectFormView) {
-		this.projectCreateView = projectFormView;
+	public void setProjectCreateView(ProjectCreateView projectCreateView) {
+		this.projectCreateView = projectCreateView;
 	}
 
 	/**
-	 * @return the projectDetailView
+	 * @return the projectReadView
 	 */
-	public ProjectReadView getProjectDetailView() {
-		return projectDetailView;
+	public ProjectReadView getProjectReadView() {
+		return projectReadView;
 	}
 
 	/**
-	 * @param projectDetailView the projectDetailView to set
+	 * @param projectReadView the projectReadView to set
 	 */
-	public void setProjectDetailView(ProjectReadView projectDetailView) {
-		this.projectDetailView = projectDetailView;
+	public void setProjectReadView(ProjectReadView projectReadView) {
+		this.projectReadView = projectReadView;
 	}
 
 	/**
@@ -222,4 +222,5 @@ public class ProjectService extends AbsBaseService{
 	public void setProjectListView(ProjectListView projectListView) {
 		this.projectListView = projectListView;
 	}
+	
 }
