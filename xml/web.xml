@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="true">
+
+	<servlet> <!-- servlet클래스 정의 -->
+		<servlet-name>One</servlet-name> <!-- 클래스의 닉네임 -->
+		<servlet-class>customservlet.CustomServletOne</servlet-class> <!-- servlet규칙에 의해 구체화된 클래스만 올수있다. -->
+	</servlet>
+	<servlet>
+		<servlet-name>Two</servlet-name>
+		<servlet-class>customservlet.CustomServletTwo</servlet-class> 
+	</servlet>
+	<servlet-mapping> <!-- url에대해서 연결시켜준다. -->
+		<servlet-name>One</servlet-name> <!-- 클래스의 닉네임만 올수있다. -->
+		<url-pattern>/test/One</url-pattern> <!-- 반드시 "/"으로 시작한다.브라우저에서 사용하는이름. 
+												클래스이름과 상관없다.바꾼뒤에는 다시 복사 덮어쓰기해야함. -->
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Two</servlet-name>
+		<url-pattern>/test/Two</url-pattern> 
+	</servlet-mapping>
+</web-app>
