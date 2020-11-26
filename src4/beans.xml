@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+       	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+    <!-- 1. 빈 생성 : I.O.C. -->    
+	<bean id="car" class="customspring.Car"/>
+	
+    <!-- 2. 빈의 Scope -->    
+	<bean id="car2" class="customspring.Car" scope="prototype"/>
+	
+    <!-- 3. 빈의 setter method 호출 (1)-->    
+	<bean id="car3" class="customspring.Car">
+		<property name="model" value="Call : Setter method(1)"/>
+		<property name="cc" value="33331"/>
+	</bean>
+	
+    <!-- 4. 빈의 setter method 호출 (2) : ex) name의 타입이 ArrayList일 경우에 쓸 수 있다.-->    
+	<bean id="car4" class="customspring.Car">
+		<property name="model">
+			<value>Call : Setter method(2)</value>
+		</property>
+		<property name="cc">
+			<value>33332</value>
+		</property> 
+	</bean>
+	
+	<!-- 5. 빈의 setter method 호출 (3)
+			- 엘리먼트의 속성(attribute)을 이용한 호출	
+	  -->
+	<bean id="car5" class="customspring.Car"
+		p:model="Call : Setter method(3)" p:cc="33333"/>
+		
+	<!-- 6. Collection Parameter의 Call Setter 
+		<value>List[1]</value> : 리스트안에 넣을 것
+	-->
+	<bean id="car6" class="customspring.Car">
+		<property name="options">
+			<list>
+				<value>List[1]</value>
+				<value>List[2]</value>
+				<bean class="customspring.Trunk">
+					<property name="capacity" value="2"/>
+				</bean>
+			</list>
+		</property> 
+	</bean>
+	
+	<!-- 7. Collection에 추가한 Bean의 Scope?? singleton인지 prototype인지 알아보기 -->
+	<bean id="car7" class="customspring.Car">
+		<property name="options">
+			<list>
+				<value>List[1]</value>
+				<value>List[2]</value>
+				<bean class="customspring.Trunk">
+					<property name="capacity" value="2"/>
+				</bean>
+			</list>
+		</property> 
+	</bean>
+	
+	<!-- 8. Collection에 기존 객체를 추가하기 
+			객체 주소를 할당할때는 ref를 써야한다.
+	-->
+	<bean id="trunk" class="customspring.Trunk">
+		<property name="capacity" value="1990"/>
+	</bean>
+	<bean id="car8" class="customspring.Car">
+		<property name="options">
+			<list>
+				<value>List[1]</value>
+				<value>List[2]</value>
+				<ref bean="trunk"/>
+			</list>
+		</property> 
+	</bean>
+	<bean id="car9" class="customspring.Car">
+		<property name="options">
+			<list>
+				<value>List[1]</value>
+				<value>List[2]</value>
+				<ref bean="trunk"/>
+			</list>
+		</property> 
+	</bean>
+	<!-- 9. Properties parameter를 갖는 setter 호출-->
+	<bean id="car10" class="customspring.Car">
+		<property name="properties">
+			<props>
+				<prop key="oil">2013-01-05</prop>
+				<prop key="timebelt">2011-04-04</prop>
+				<prop key="sunroof">yes</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 10. parameter가 있는 생성자 호출 : 순서대로 넣어야함-->
+	<bean id="engine1" class="customspring.Engine">
+		<constructor-arg value="first engine"/>
+		<constructor-arg value="1"/>
+	</bean>
+	
+	<!-- 11. parameter를 통해 생성자 구분이 불가능한 경우? 첫번째 생성자-->
+	<bean id="engine2" class="customspring.Engine">
+		<constructor-arg type="int" value="20"/>
+		<constructor-arg type="java.lang.String" value="3000"/>
+	</bean>
+	
+	<!-- 12. Factory 객체를 통해 instance 얻기 : class 안의 static 으로 선언된 method를 호출해서 그 메소드가 주는 return값을 return.-->
+	<bean id="car11" class="customspring.CarFactory" factory-method="createCar"/>
+	
+	<!-- 13. Factory 객체를 통해 instance 얻기 : AbstractFactoryBean 상속받은 클래스
+			- 다른 것을 상속받을때에는 factory-method를 사용하고....
+			- <bean id="car12" class="customspring.CarFactory2"/> 대신 CarFactory2를 리턴하는 것으로 보일 수 있다. -->
+	<bean id="car12" class="customspring.CarFactoryBean"/>
+</beans>
