@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <typeAliases>
-  	<typeAlias type="advanced.App.vo.Project" alias="project"/>    
+  	<typeAlias type="advanced.App.dto.Project" alias="project"/>    
   </typeAliases>
   
   <environments default="development"> <!-- DB정보 목록 -->
@@ -32,6 +32,6 @@
   </environments>
   
   <mappers> <!-- SQL 파일 정보 -->
-    <mapper resource="advanced/App/Mapper/ProjectDao.xml"/>
+    <mapper resource="advanced/App/MapperXml/ProjectDao.xml"/>
   </mappers>
 </configuration>

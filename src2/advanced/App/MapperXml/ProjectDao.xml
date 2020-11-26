@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="advanced.App.dao.IProjectDao"><!-- xml루트 태그 -->
+	<insert id="addProject" parameterType="project">
+		insert into PROJECTS(TITLE,DECPT,START_DATE,END_DATE)
+		values(#{title}, #{description}, #{startDate}, #{endDate})<!-- getter메도스 이름, public으로 된 인스턴스 변수명이어야한다. -->
+	</insert>
+	
+	<select id="getProject" parameterType="int" resultType="project" ><!-- resultType은 어디에다 저장할것인지 -->
+		select 
+			PRJ_NO as id,
+			TITLE as title,
+			DECPT as description,
+			START_DATE as startDate,
+			END_DATE as endDate
+		from PROJECTS
+		where PRJ_NO=#{value}
+	</select>
+	
+	<select id="getProjectList" resultType="project" >
+		select 
+			PRJ_NO as id,
+			TITLE as title,
+			DECPT as description,
+			START_DATE as startDate,
+			END_DATE as endDate
+		from PROJECTS
+	</select>
+	
+	<update id="updateProject" parameterType="project">
+		update PROJECTS set
+			TITLE=#{title},
+			DECPT=#{description},
+			START_DATE=#{startDate},
+			END_DATE=#{endDate}
+		where PRJ_NO=#{id}
+	</update>
+	
+	<delete id="deleteProject" parameterType="int">
+		delete from PROJECTS
+		where PRJ_NO=#{value}
+	</delete>
+	
+</mapper>
