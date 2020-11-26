@@ -3,6 +3,7 @@ package advanced.App;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -10,6 +11,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Scanner;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import advanced.App.Controller.IBaseController;
 import advanced.App.Controller.MemberController;
@@ -24,7 +29,6 @@ public class ProjectApp {
 	/**
 	 * 사용자 명령에 맞는 Controller 호출 목록 ! RequestMapping, Controller
 	 */
-	HashMap<String, IBaseController> controllerMap = new HashMap<String, IBaseController>();
 	HashMap<String, Object> applicationContext = new HashMap<String, Object>();
 
 	/**
@@ -52,7 +56,7 @@ public class ProjectApp {
 		// ! 화면 생성
 		scanner = new Scanner(System.in);
 
-		prepareDBConnectionPool();
+		prepareSqlSessionFactory(); // change to mybatis
 
 		prepareObject();
 		injectDependency();
@@ -62,15 +66,13 @@ public class ProjectApp {
 
 	/**
 	 * Prepare DataBase Connection Pool
+	 * change to mybatis
+	 * @throws IOException
 	 */
-	private void prepareDBConnectionPool() {
-		String driver = "org.postgresql.Driver";
-		String url = "jdbc:postgresql://localhost:5433/postgres";
-		String user = "postgres";
-		String password = "#skdlf12";
-
-		DBConnectionPool dbcp = new DBConnectionPool(driver, url, user, password);
-		applicationContext.put("dbConnectionPool", dbcp);
+	private void prepareSqlSessionFactory() throws IOException {
+		InputStream in = Resources.getResourceAsStream("advanced/App/MapperConfig/mybatis-config.xml");
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
+		applicationContext.put("sqlSessionFactory", sqlSessionFactory);
 	}
 
 	/**
