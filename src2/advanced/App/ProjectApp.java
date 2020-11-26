@@ -87,7 +87,9 @@ public class ProjectApp {
 			NoSuchMethodException, SecurityException {
 
 		// ! classpath 경로를 따라 조사하여 @Component 주석이 붙은 클래스만 추출한다.
-		Reflections reflections = new Reflections("advanced");
+		// * https://ronmamo.github.io/reflections/org/reflections/Reflections.html
+		// ! guava-29.0-jre.jar, javassist-3.24.0-GA.jar, reflections-0.9.11.jar 필요
+		Reflections reflections = new Reflections("advanced.App");
 		Set<Class<?>> clazzList = reflections.getTypesAnnotatedWith(CustomAnnotation.class); //CustomAnnotation라는 annotation이 붙은 클래스의 정보들
 
 		CustomAnnotation customAnnotation = null;
