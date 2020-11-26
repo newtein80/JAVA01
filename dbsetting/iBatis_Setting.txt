@@ -1,0 +1,18 @@
+* mybatis 프레임워크 사용
+1. 설정파일 생성
+	src/advanced/dao./mybatis-config.xml
+
+2. 설정파일을 읽을 입력스트림객체 준비
+	// 클래스 경로를 뒤진다.
+	Resources.getResourceAsStream("dao/mybatis-config.xml");
+	
+3. SqlSessionFactoryBuilder 객체 생성 및 SqlSessionFactory 객체 얻기
+	new SqlSessionFactoryBuilder().build(설정파일입력스트림)
+
+4. DAO 객체에 SqlSessionFactory 적용
+- setSqlSessionFactory() 추가
+- SqlSession 사용
+
+5. mybatis-config.xml 파일 편집
+
+6. project.xml 파일 편집

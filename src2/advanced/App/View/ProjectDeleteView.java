@@ -3,6 +3,9 @@ package advanced.App.View;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
+
+@CustomAnnotation(name="projectDeleteView")
 public class ProjectDeleteView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
 		System.out.print("삭제할 프로젝트 번호: ");

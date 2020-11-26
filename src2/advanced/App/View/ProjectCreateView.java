@@ -25,8 +25,10 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Project;
 
+@CustomAnnotation(name="projectCreateView")
 public class ProjectCreateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String,Object> valueMap) {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");

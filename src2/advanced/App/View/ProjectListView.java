@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Project;
 
+@CustomAnnotation(name="projectListView")
 public class ProjectListView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
 		// Project[] list = (Project[])valueMap.get("list");

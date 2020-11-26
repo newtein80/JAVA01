@@ -1,6 +1,9 @@
 package advanced.App.dao;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import advanced.App.dto.Project;
 
@@ -11,7 +14,7 @@ import advanced.App.dto.Project;
  * persistence layer: Database에 data를 CRUD(Create, Read, Update, Drop)하는 계층
  * ! Database 처리(in Memory)
  */
-public class ProjectDaoInMemory {
+public class ProjectDaoInMemory implements IProjectDao {
 	int seqNo = 0;
 	HashMap<Integer,Project> projectMap = 
 			new HashMap<Integer,Project>();
@@ -34,9 +37,22 @@ public class ProjectDaoInMemory {
 		projectMap.remove(id);
 	}
 	
-	public Project[] getProjectList() {
+	public Project[] getProjectList2() {
 		Project[] list = new Project[projectMap.size()];
 		projectMap.values().toArray(list);
 		return list;
+	}
+
+	@Override
+	public Collection<Project> getProjectList() {
+		Project[] list = new Project[projectMap.size()];
+		projectMap.values().toArray(list);
+		return Arrays.stream(list).collect(Collectors.toList());
+		// return Arrays.asList(list);
+	}
+
+	@Override
+	public void close() {
+
 	}
 }

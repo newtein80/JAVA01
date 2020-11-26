@@ -2,8 +2,9 @@ package advanced.App.Controller;
 
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.Service.ProjectService;
-
+@CustomAnnotation(name="p", type="controller")
 public class ProjectController implements IBaseController {
 	Scanner scanner;
 	ProjectService pm;

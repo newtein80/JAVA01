@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Member;
 
+@CustomAnnotation(name="projectUpdateView")
 public class ProjectUpdateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String,Object> valueMap) {
 		Member member = new Member();

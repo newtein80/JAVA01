@@ -3,8 +3,10 @@ package advanced.App.View;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Project;
 
+@CustomAnnotation(name="projectReadView")
 public class ProjectReadView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {
 		if (valueMap.get("project") == null) {

@@ -11,14 +11,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.reflections.Reflections;
 
 import advanced.App.Controller.IBaseController;
 import advanced.App.Controller.MemberController;
 import advanced.App.Controller.ProjectController;
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.infra.DBConnectionPool;
 
 /**
@@ -83,23 +86,17 @@ public class ProjectApp {
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
 
-		Properties props = new Properties();
-		props.load(new FileReader("controllermap.properties"));
-		/*
-			p=advanced.App.Controller.ProjectController
-			m=advanced.App.Controller.MemberController
-		*/
-		Collection<Object> keyList = props.keySet();
+		// ! classpath 경로를 따라 조사하여 @Component 주석이 붙은 클래스만 추출한다.
+		Reflections reflections = new Reflections("advanced");
+		Set<Class<?>> clazzList = reflections.getTypesAnnotatedWith(CustomAnnotation.class); //CustomAnnotation라는 annotation이 붙은 클래스의 정보들
 
-		Class<?> clazz = null;
+		CustomAnnotation customAnnotation = null;
 
-		for(Object keyName : keyList) {
-			clazz = Class.forName(props.getProperty(((String) keyName).trim()));
+		for(Class<?> clazz : clazzList){
 
-			// applicationContext.put("p", ProjectController);
-			// applicationContext.put("m", MemberController);
+			customAnnotation = clazz.getAnnotation(CustomAnnotation.class);
 			// ! 중요: .properties 파일에 작성된 클래스 명을 생성자(constructor)를 통해 생성. 즉, 각 클래스는 생성자를 통해 이미 생성되어있음!!
-			applicationContext.put(((String) keyName).trim(), clazz.getDeclaredConstructor().newInstance());
+			applicationContext.put(customAnnotation.name(), clazz.getDeclaredConstructor().newInstance());
 		}
 	}
 
@@ -151,8 +148,8 @@ public class ProjectApp {
 			if (obj instanceof IBaseController)
 				((IBaseController)obj).destroy();
 			
-			if (obj instanceof DBConnectionPool)
-				((DBConnectionPool)obj).close();
+			// if (obj instanceof DBConnectionPool)
+			// 	((DBConnectionPool)obj).close();
 		}
 	}
 

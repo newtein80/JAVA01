@@ -2,8 +2,10 @@ package advanced.App.Controller;
 
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.Service.MemberService;
 
+@CustomAnnotation(name="m", type="controller")
 public class MemberController implements IBaseController {
 	Scanner scanner;
 	MemberService mm;

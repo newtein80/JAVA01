@@ -3,6 +3,7 @@ package advanced.App.Service;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.View.MemberCreateView;
 import advanced.App.View.MemberDeleteView;
 import advanced.App.View.MemberListView;
@@ -15,6 +16,7 @@ import advanced.App.dto.Member;
  * Controller가 Request를 받으면 적절한 Service에 전달하고, 전달 받은 Service는 비즈니스 로직을 처리한다.
  * DAO로 데이터베이스를 접근하고, DTO로 데이터를 전달받은 다음, 적절한 처리를 해 반환한다. 
  */
+@CustomAnnotation(name="memberService")
 public class MemberService extends AbsBaseService {
 
 	/**
