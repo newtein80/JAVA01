@@ -7,7 +7,7 @@ import advanced.App.Service.ProjectService;
 @CustomAnnotation(name="p", type="controller")
 public class ProjectController implements IBaseController {
 	Scanner scanner;
-	ProjectService pm;
+	ProjectService projectService;
 	
 	/**
 	 * 사용자 입력도구 연결과 신규(new) 비지니스로직을 생성
@@ -18,7 +18,7 @@ public class ProjectController implements IBaseController {
 	}
 
 	public void setProjectController(ProjectService projectService) {
-		this.pm = projectService;
+		this.projectService = projectService;
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class ProjectController implements IBaseController {
 	 */
 	@Override
 	public void service() throws Exception {
-		pm.service(scanner);
+		projectService.service(scanner);
 	}
 
 	/**
@@ -40,6 +40,20 @@ public class ProjectController implements IBaseController {
 	@Override
 	public void destroy() {
 
+	}
+
+	/**
+	 * @return the projectService
+	 */
+	public ProjectService getProjectService() {
+		return projectService;
+	}
+
+	/**
+	 * @param projectService the projectService to set
+	 */
+	public void setProjectService(ProjectService projectService) {
+		this.projectService = projectService;
 	}
 
 }

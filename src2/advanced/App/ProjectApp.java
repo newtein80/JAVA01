@@ -61,6 +61,7 @@ public class ProjectApp {
 		// ! 화면 생성
 		scanner = new Scanner(System.in);
 
+		// ! 관련 jar 파일: mybatis-spring-x.x.x.jar, spring-aop-x.x.x.RELEASE.jar, spring-jdbc-x.x.x.RELEASE.jar, spring-tx-x.x.x.RELEASE.jar
 		applicationContext = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
 	}
 

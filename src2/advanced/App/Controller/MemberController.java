@@ -8,7 +8,7 @@ import advanced.App.Service.MemberService;
 @CustomAnnotation(name="m", type="controller")
 public class MemberController implements IBaseController {
 	Scanner scanner;
-	MemberService mm;
+	MemberService memberService;
 	
 	/**
 	 * 사용자 입력도구 연결과 비지니스로직의 이름을 초기화
@@ -19,7 +19,7 @@ public class MemberController implements IBaseController {
 	}
 
 	public void setMemeberController(MemberService memberService) {
-		this.mm = memberService;
+		this.memberService = memberService;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class MemberController implements IBaseController {
 	 */
 	@Override
 	public void service() throws Exception {
-		mm.service(scanner);
+		memberService.service(scanner);
 	}
 
 	/**

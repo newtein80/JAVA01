@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="advanced.App.dao.IProjectDao"><!-- xml루트 태그 -->
 	<insert id="addProject" parameterType="project">
-		insert into PROJECTS(TITLE,DECPT,START_DATE,END_DATE)
+		insert into t_project(TITLE,DECPT,START_DATE,END_DATE)
 		values(#{title}, #{description}, #{startDate}, #{endDate})<!-- getter메도스 이름, public으로 된 인스턴스 변수명이어야한다. -->
 	</insert>
 	
@@ -15,7 +15,7 @@
 			DECPT as description,
 			START_DATE as startDate,
 			END_DATE as endDate
-		from PROJECTS
+		from t_project
 		where PRJ_NO=#{value}
 	</select>
 	
@@ -26,11 +26,11 @@
 			DECPT as description,
 			START_DATE as startDate,
 			END_DATE as endDate
-		from PROJECTS
+		from t_project
 	</select>
 	
 	<update id="updateProject" parameterType="project">
-		update PROJECTS set
+		update t_project set
 			TITLE=#{title},
 			DECPT=#{description},
 			START_DATE=#{startDate},
@@ -39,7 +39,7 @@
 	</update>
 	
 	<delete id="deleteProject" parameterType="int">
-		delete from PROJECTS
+		delete from t_project
 		where PRJ_NO=#{value}
 	</delete>
 	

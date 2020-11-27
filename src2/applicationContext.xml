@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="
+       	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- <bean id="help" class="advanced.command.HelpCommander"/> -->
     <!-- <bean id="l" class="advanced.command.LectureCommander"/> -->
     <bean id="m" class="advanced.App.Controller.MemberController"/>
-    <!-- <bean id="p" class="advanced.App.Controller.ProjectController">
+    <bean id="p" class="advanced.App.Controller.ProjectController">
         <property name="projectService" ref="projectService" />
-    </bean> -->
-    <bean id="p" class="advanced.App.Controller.ProjectController"/>
+    </bean>
+    <!-- <bean id="p" class="advanced.App.Controller.ProjectController"/> -->
     
     <bean id="projectService" class="advanced.App.Service.ProjectService">
     		<property name="projectDao" ref="projectDao" />
@@ -21,10 +25,10 @@
     		<property name="projectListView" ref="projectListView" />
     </bean>
     <!-- mybatis 맵퍼객체 자동 설정 -->
-    <!-- <bean id="projectDao" class="advanced.App.dao.ProjectDao">
+    <bean id="projectDao" class="advanced.App.dao.ProjectDao">
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean> -->
-    <bean id="projectDao" class="advanced.App.dao.ProjectDao"/>
+    </bean>
+    <!-- <bean id="projectDao" class="advanced.App.dao.ProjectDao"/> -->
     <bean id="projectCreateView" class="advanced.App.View.ProjectCreateView"/>
     <bean id="projectReadView" class="advanced.App.View.ProjectReadView"/>
     <bean id="projectUpdateView" class="advanced.App.View.ProjectUpdateView"/>
@@ -32,13 +36,10 @@
     <bean id="projectListView" class="advanced.App.View.ProjectListView"/>
     
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
-    		<property name="dataSource" ref="dataSource" />
-<!--     		<property name="configLocation"  -->
-<!--     		    value="advanced/dao/mybatis-config.xml"/> -->
-    		<property name="mapperLocations" 
-    		     value="classpath*:advanced/App/MapperXml/*Dao.xml" />
-    		<property name="typeAliasesPackage" 
-    		     value="advanced.App.dto" />
+    	<property name="dataSource" ref="dataSource" />
+        <!-- <property name="configLocation" value="advanced/App/MapperConfig/mybatis-config.xml"/> -->
+    	<property name="mapperLocations" value="classpath*:advanced/App/MapperXml/*Dao.xml" />
+    	<property name="typeAliasesPackage" value="advanced.App.dto" />
     </bean>
 
     <bean id="dataSource" 
@@ -49,7 +50,7 @@
 	    <property name="password" value="#skdlf12"/>
 	</bean>
 	<!-- 인터페이스와 SQL 맵퍼파일을 참고하여 DAO 구현체 준비 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
   		<property name="basePackage" value="advanced.App.dao" />
-	</bean>
+	</bean> -->
 </beans>
