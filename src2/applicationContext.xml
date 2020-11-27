@@ -8,32 +8,33 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="advanced.App"/>
     <!-- <bean id="help" class="advanced.command.HelpCommander"/> -->
     <!-- <bean id="l" class="advanced.command.LectureCommander"/> -->
-    <bean id="m" class="advanced.App.Controller.MemberController"/>
+    <!-- <bean id="m" class="advanced.App.Controller.MemberController"/>
     <bean id="p" class="advanced.App.Controller.ProjectController">
         <property name="projectService" ref="projectService" />
-    </bean>
+    </bean> -->
     <!-- <bean id="p" class="advanced.App.Controller.ProjectController"/> -->
     
-    <bean id="projectService" class="advanced.App.Service.ProjectService">
+    <!-- <bean id="projectService" class="advanced.App.Service.ProjectService">
     		<property name="projectDao" ref="projectDao" />
     		<property name="projectCreateView" ref="projectCreateView" />
     		<property name="projectReadView" ref="projectReadView" />
     		<property name="projectUpdateView" ref="projectUpdateView" />
     		<property name="projectDeleteView" ref="projectDeleteView" />
     		<property name="projectListView" ref="projectListView" />
-    </bean>
+    </bean> -->
     <!-- mybatis 맵퍼객체 자동 설정 -->
-    <bean id="projectDao" class="advanced.App.dao.ProjectDao">
+    <!-- <bean id="projectDao" class="advanced.App.dao.ProjectDao">
         <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-    </bean>
+    </bean> -->
     <!-- <bean id="projectDao" class="advanced.App.dao.ProjectDao"/> -->
-    <bean id="projectCreateView" class="advanced.App.View.ProjectCreateView"/>
+    <!-- <bean id="projectCreateView" class="advanced.App.View.ProjectCreateView"/>
     <bean id="projectReadView" class="advanced.App.View.ProjectReadView"/>
     <bean id="projectUpdateView" class="advanced.App.View.ProjectUpdateView"/>
     <bean id="projectDeleteView" class="advanced.App.View.ProjectDeleteView"/>
-    <bean id="projectListView" class="advanced.App.View.ProjectListView"/>
+    <bean id="projectListView" class="advanced.App.View.ProjectListView"/> -->
     
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
     	<property name="dataSource" ref="dataSource" />
@@ -50,7 +51,7 @@
 	    <property name="password" value="#skdlf12"/>
 	</bean>
 	<!-- 인터페이스와 SQL 맵퍼파일을 참고하여 DAO 구현체 준비 -->
-	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
   		<property name="basePackage" value="advanced.App.dao" />
-	</bean> -->
+	</bean>
 </beans>

@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Member;
 
+@Component
 @CustomAnnotation(name="projectUpdateView")
 public class ProjectUpdateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String,Object> valueMap) {

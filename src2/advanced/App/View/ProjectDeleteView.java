@@ -3,8 +3,11 @@ package advanced.App.View;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import advanced.App.CustomAnnotation.CustomAnnotation;
 
+@Component
 @CustomAnnotation(name="projectDeleteView")
 public class ProjectDeleteView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {

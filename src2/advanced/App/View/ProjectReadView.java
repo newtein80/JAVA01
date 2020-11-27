@@ -3,9 +3,12 @@ package advanced.App.View;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Project;
 
+@Component
 @CustomAnnotation(name="projectReadView")
 public class ProjectReadView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String, Object> valueMap) {

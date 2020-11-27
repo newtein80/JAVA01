@@ -25,9 +25,12 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Component;
+
 import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.dto.Project;
 
+@Component
 @CustomAnnotation(name="projectCreateView")
 public class ProjectCreateView extends AbsBaseView {
 	public void execute(Scanner scanner, HashMap<String,Object> valueMap) {

@@ -3,30 +3,41 @@ package advanced.App.Service;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.View.ProjectCreateView;
 import advanced.App.View.ProjectDeleteView;
 import advanced.App.View.ProjectListView;
 import advanced.App.View.ProjectReadView;
 import advanced.App.View.ProjectUpdateView;
-import advanced.App.dao.ProjectDao;
+import advanced.App.dao.IProjectDao;
+// import advanced.App.dao.ProjectDao;
 import advanced.App.dto.Project;
 
 /**
  * Controller가 Request를 받으면 적절한 Service에 전달하고, 전달 받은 Service는 비즈니스 로직을 처리한다.
  * DAO로 데이터베이스를 접근하고, DTO로 데이터를 전달받은 다음, 적절한 처리를 해 반환한다. 
  */
+@Service
 @CustomAnnotation(name="projectService")
 public class ProjectService extends AbsBaseService{
 
 	//Scanner scanner = null;
-	ProjectDao projectDao;
+	@Autowired
+	IProjectDao projectDao;
 	
 	// 각각의 Action에 맞는 UI 선언
-	ProjectCreateView projectCreateView;	
+	@Autowired
+	ProjectCreateView projectCreateView;
+	@Autowired
 	ProjectReadView projectReadView;
+	@Autowired
 	ProjectUpdateView projectUpdateView;
+	@Autowired
 	ProjectDeleteView projectDeleteView;
+	@Autowired
 	ProjectListView	projectListView;
 	
 	/**
@@ -139,88 +150,4 @@ public class ProjectService extends AbsBaseService{
 		projectUpdateView.displayResult("변경 성공입니다.");
 	}
 
-	/**
-	 * @return the projectDao
-	 */
-	public ProjectDao getProjectDao() {
-		return projectDao;
-	}
-
-	/**
-	 * @param projectDao the projectDao to set
-	 */
-	public void setProjectDao(ProjectDao projectDao) {
-		this.projectDao = projectDao;
-	}
-
-	/**
-	 * @return the projectCreateView
-	 */
-	public ProjectCreateView getProjectCreateView() {
-		return projectCreateView;
-	}
-
-	/**
-	 * @param projectCreateView the projectCreateView to set
-	 */
-	public void setProjectCreateView(ProjectCreateView projectCreateView) {
-		this.projectCreateView = projectCreateView;
-	}
-
-	/**
-	 * @return the projectReadView
-	 */
-	public ProjectReadView getProjectReadView() {
-		return projectReadView;
-	}
-
-	/**
-	 * @param projectReadView the projectReadView to set
-	 */
-	public void setProjectReadView(ProjectReadView projectReadView) {
-		this.projectReadView = projectReadView;
-	}
-
-	/**
-	 * @return the projectUpdateView
-	 */
-	public ProjectUpdateView getProjectUpdateView() {
-		return projectUpdateView;
-	}
-
-	/**
-	 * @param projectUpdateView the projectUpdateView to set
-	 */
-	public void setProjectUpdateView(ProjectUpdateView projectUpdateView) {
-		this.projectUpdateView = projectUpdateView;
-	}
-
-	/**
-	 * @return the projectDeleteView
-	 */
-	public ProjectDeleteView getProjectDeleteView() {
-		return projectDeleteView;
-	}
-
-	/**
-	 * @param projectDeleteView the projectDeleteView to set
-	 */
-	public void setProjectDeleteView(ProjectDeleteView projectDeleteView) {
-		this.projectDeleteView = projectDeleteView;
-	}
-
-	/**
-	 * @return the projectListView
-	 */
-	public ProjectListView getProjectListView() {
-		return projectListView;
-	}
-
-	/**
-	 * @param projectListView the projectListView to set
-	 */
-	public void setProjectListView(ProjectListView projectListView) {
-		this.projectListView = projectListView;
-	}
-	
 }

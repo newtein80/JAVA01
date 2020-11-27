@@ -2,11 +2,18 @@ package advanced.App.Controller;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import advanced.App.CustomAnnotation.CustomAnnotation;
 import advanced.App.Service.ProjectService;
+
+@Component("p")
 @CustomAnnotation(name="p", type="controller")
 public class ProjectController implements IBaseController {
 	Scanner scanner;
+
+	@Autowired
 	ProjectService projectService;
 	
 	/**
@@ -45,15 +52,15 @@ public class ProjectController implements IBaseController {
 	/**
 	 * @return the projectService
 	 */
-	public ProjectService getProjectService() {
-		return projectService;
-	}
+	// public ProjectService getProjectService() {
+	// 	return projectService;
+	// }
 
 	/**
 	 * @param projectService the projectService to set
 	 */
-	public void setProjectService(ProjectService projectService) {
-		this.projectService = projectService;
-	}
+	// public void setProjectService(ProjectService projectService) {
+	// 	this.projectService = projectService;
+	// }
 
 }
